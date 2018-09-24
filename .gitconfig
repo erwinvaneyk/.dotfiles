@@ -17,3 +17,4 @@
 	email = erwinvaneyk@gmail.com
 [core]
 	excludesfile = ~/.gitignore_global
+	editor = vim

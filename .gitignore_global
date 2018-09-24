@@ -45,3 +45,8 @@ config.codekit
 # Intellij
 *.iml
 .idea/
+
+# Notes & todos
+*.local
+local/
+.Ulysses-Group.plist

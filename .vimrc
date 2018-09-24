@@ -47,4 +47,26 @@ let g:tagbar_type_go = {
 set backspace=indent,eol,start
 set showcmd
 set ruler
-set spell spelllang=en_us
+
+" vim-latex recommended configs
+" http://vim-latex.sourceforge.net/documentation/latex-suite/recommended-settings.html
+
+" REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
+filetype plugin on
+
+" IMPORTANT: win32 users will need to have 'shellslash' set so that latex
+" can be called correctly.
+set shellslash
+
+" OPTIONAL: This enables automatic indentation as you type.
+filetype indent on
+
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+let g:tex_flavor='latex'
+
+" Ensure that template directory can be found - append as a comma-seperated list
+let g:Tex_CustomTemplateDirectory='/Users/erwin/.vim/bundle/vim-latex/ftplugin/latex-suite/templates/'
+let g:Tex_DefaultTargetFormat='pdf'
+let g:Tex_MultipleCompileFormats='pdf,bibtex,pdf'
