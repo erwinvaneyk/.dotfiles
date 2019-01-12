@@ -70,3 +70,6 @@ let g:tex_flavor='latex'
 let g:Tex_CustomTemplateDirectory='/Users/erwin/.vim/bundle/vim-latex/ftplugin/latex-suite/templates/'
 let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_MultipleCompileFormats='pdf,bibtex,pdf'
+
+" Remap other key for esc on ipad keyboard 
+inoremap §§ <Esc>
