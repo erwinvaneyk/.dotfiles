@@ -73,3 +73,17 @@ let g:Tex_MultipleCompileFormats='pdf,bibtex,pdf'
 
 " Remap other key for esc on ipad keyboard 
 inoremap §§ <Esc>
+
+" Always start NERDTree as a directory hierarchy viewer
+" autocmd vimenter * NERDTree
+
+" Toggle NERDTree with ctrl+n
+map <C-n> :NERDTreeToggle<CR>
+
+" Start NERDTree when directory is provided OR when no file is provided.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" Customize shell
+set shell=/usr/local/bin/zsh
