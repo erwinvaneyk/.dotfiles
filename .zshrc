@@ -89,15 +89,59 @@ fi
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
 # Custom
 # Set language to (US) English to avoid language warnings from vim.
 export LC_ALL=en_US.UTF-8
+
+# Go
+export GOPATH=/Users/erwin/go
+export GOBIN=/Users/erwin/go/bin
+
+# Aliase
+alias sudo='sudo '                          # Fixes sudo for aliases
+alias :q='exit'
+alias cp='cp -iv'                           # Preferred 'cp' implementation
+alias mv='mv -iv'                           # Preferred 'mv' implementation
+alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
+alias ll='ls -FGlAhp'  			    # Preferred 'ls' implementations
+alias less='less -FSRXc'                    # Preferred 'less' implementation
+cd() { builtin cd "$@"; ll; }               # Always list directory contents upon 'cd'
+alias vi="vim"
+alias cd~="cd ~"
+alias cd..="cd ../"
+alias .="cd .."
+alias ..="cd ../.."
+alias ...="cd ../../.."
+alias edit='vim'			    # Open in default editor (vim)
+alias f='open -a Finder ./'                 # f: Opens current directory in MacOS Finder
+alias projects="cd ~/projects"
+alias path='echo -e ${PATH//:/\\n}'         # path: Echo all executable Paths
+alias myip='curl ip.appspot.com'            # myip: Public facing IP Address
+alias ~="cd ~"                              # ~: Go Home
+alias c='clear'                  	    # c: Clear terminal display
+alias update='brew update && brew upgrade --all && brew cask update && brew cleanup && brew cask cleanup'
+
+#   extract:  Extract most known archives with one command
+#   ---------------------------------------------------------
+extract () {
+ if [ -f $1 ] ; then
+  case $1 in
+    *.tar.bz2)   tar xjf $1     ;;
+    *.tar.gz)    tar xzf $1     ;;
+    *.bz2)       bunzip2 $1     ;;
+    *.rar)       unrar e $1     ;;
+    *.gz)        gunzip $1      ;;
+    *.tar)       tar xf $1      ;;
+    *.tbz2)      tar xjf $1     ;;
+    *.tgz)       tar xzf $1     ;;
+    *.zip)       unzip $1       ;;
+    *.Z)         uncompress $1  ;;
+    *.7z)        7z x $1        ;;
+    *)     echo "'$1' cannot be extracted via extract()" ;;
+     esac
+ else
+     echo "'$1' is not a valid file"
+ fi
+}
+
+export GO111MODULE=on

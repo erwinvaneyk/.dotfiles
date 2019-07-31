@@ -50,3 +50,6 @@ config.codekit
 *.local
 local/
 .Ulysses-Group.plist
+
+# VSCode
+.vscode/
