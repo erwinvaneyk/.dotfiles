@@ -4,7 +4,12 @@ set -x
 set -e
 
 # Install Homebrew
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+if ! command -v brew; then
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
+
+brew update
+brew upgrade
 
 # Install (CLI) tooling (and override defaults)
 
@@ -15,6 +20,7 @@ brew install go
 
 ## Terminal-related
 brew install zsh # overrides system-provided zsh
+brew install zsh-completions
 brew install bash # overrides system-provided bash
 
 ## Editors
