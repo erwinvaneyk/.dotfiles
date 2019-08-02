@@ -145,3 +145,5 @@ extract () {
 }
 
 export GO111MODULE=on
+
+alias git="hub"
