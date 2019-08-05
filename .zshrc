@@ -88,16 +88,20 @@ fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
+setopt complete_aliases
 
 # Custom
 # Set language to (US) English to avoid language warnings from vim.
 export LC_ALL=en_US.UTF-8
 
 # Go
-export GOPATH=/Users/erwin/go
-export GOBIN=/Users/erwin/go/bin
+export GO111MODULE=on
+export GOPATH="${HOME}/go"
+export GOBIN="${GOPATH}/bin"
+export GOPROXY="https://proxy.golang.org"
+export PATH="${PATH}:${GOBIN}"
 
-# Aliase
+# Aliases
 alias sudo='sudo '                          # Fixes sudo for aliases
 alias :q='exit'
 alias cp='cp -iv'                           # Preferred 'cp' implementation
@@ -119,7 +123,7 @@ alias path='echo -e ${PATH//:/\\n}'         # path: Echo all executable Paths
 alias myip='curl ip.appspot.com'            # myip: Public facing IP Address
 alias ~="cd ~"                              # ~: Go Home
 alias c='clear'                  	    # c: Clear terminal display
-alias update='brew update && brew upgrade --all && brew cask update && brew cleanup && brew cask cleanup'
+alias update='brew update && brew upgrade && brew cask update && brew cleanup && brew cask cleanup'
 
 #   extract:  Extract most known archives with one command
 #   ---------------------------------------------------------
@@ -144,6 +148,18 @@ extract () {
  fi
 }
 
-export GO111MODULE=on
-
+# Git
 alias git="hub"
+alias g="git"
+compdef g="git"
+
+# Docker
+alias d="docker"
+docker-reset() { 
+	docker stop $(docker ps -a -q)
+	docker rm $(docker ps -a -q)
+}
+
+# Kubernetes
+alias k="kubectl"
+source <(kubectl completion zsh | sed 's/kubectl/k/g') # Because compdef causes a segfault in zsh
