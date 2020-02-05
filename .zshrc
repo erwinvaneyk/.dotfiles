@@ -83,7 +83,7 @@ source $ZSH/oh-my-zsh.sh
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='mvim'
+  export EDITOR='vim'
 fi
 
 # Compilation flags
@@ -163,3 +163,50 @@ docker-reset() {
 # Kubernetes
 alias k="kubectl"
 source <(kubectl completion zsh | sed 's/kubectl/k/g') # Because compdef causes a segfault in zsh
+alias ksh="kubectl run ksh --generator=run-pod/v1 --rm -i --tty --image nicolaka/netshoot -- bash"
+alias dsh="docker run --network host --name dsh --rm -it nicolaka/netshoot /bin/bash"
+
+
+# AWS
+AWS_REGION="us-west-2"
+
+# X11
+export PATH="${PATH}:/opt/X11/bin/"
+
+# Fast switching between kubeconfig files
+kc() {
+  candidate="$(kind get kubeconfig-path --name="$1")"
+  if ! stat "$candidate" > /dev/null ; then
+    candidate="${HOME}/.kube/$1"
+    if ! stat "$candidate" > /dev/null ; then
+      return
+    fi
+  fi
+  export KUBECONFIG="$candidate"
+  echo "$KUBECONFIG"
+}
+
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+# CAPI-MVP
+project() {
+  project=$1
+  project_path=$HOME/projects/$project
+  if ! "$project_path" ; then
+    echo "unknown project '$project'"
+    exit 1
+  fi
+  PATH="$project_path/bin:$PATH"
+  source "$project_path/project.env" || true
+  export PROJECT_ROOT=${project_path}
+}
+
+docker-proxy() {
+  HOST_PORT=$1
+  CONTAINER_IPPORT=$2
+  docker run --rm -p ${HOST_PORT}:1234 verb/socat TCP-LISTEN:1234,fork TCP-CONNECT:${CONTAINER_IPPORT}
+}
+
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+

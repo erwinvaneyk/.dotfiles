@@ -53,3 +53,7 @@ local/
 
 # VSCode
 .vscode/
+
+# Personal
+project.env
+*.swp
