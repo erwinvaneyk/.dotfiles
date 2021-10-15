@@ -73,3 +73,6 @@ let g:Tex_MultipleCompileFormats='pdf,bibtex,pdf'
 
 " Remap other key for esc on ipad keyboard 
 inoremap §§ <Esc>
+
+" Customize shell to zsh
+set shell=/usr/local/bin/zsh

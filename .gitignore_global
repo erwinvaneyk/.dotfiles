@@ -46,7 +46,12 @@ config.codekit
 *.iml
 .idea/
 
-# Notes & todos
+# VSCode
+.vscode/
+
+# Personal
+.Ulysses-Group.plist
 *.local
 local/
-.Ulysses-Group.plist
+local.env
+*.swp

@@ -1,8 +1,7 @@
-
 [alias]
     	s = status
 	c = checkout
-	m = checkout master
+	m = !sh -c 'git checkout $(git defaultbranch)'
 	b = branch
 	r = remote -v
 	last = log -1 HEAD # View last commit message
@@ -10,7 +9,8 @@
 	cleanmerged = !sh -c 'git branch --merged master | grep -v master | xargs -I "{}" git branch -D "{}"' -
 	sync = !sh -c 'git fetch && git remote prune origin && git cleanmerged' # Synchronize local machine to origin's state.
 	new = !sh -c 'git log $1@{1}..$1@{0} "$@"' # View new commits
-	cleanbranch = !sh -c 'git checkout master && git pull origin master && git checkout --b $0' # Switch to a new feature branch quickly
+	defaultbranch = !sh -c 'git symbolic-ref refs/remotes/origin/HEAD | sed "s@^refs/remotes/origin/@@"'
+	cleanbranch = !sh -c 'git checkout $(git defaultbranch) && git pull origin $(git defaultbranch) && git checkout --b $0' # Switch to a new feature branch quickly
 	undo = reset --soft HEAD^
 [user]
 	name = erwinvaneyk
@@ -18,3 +18,9 @@
 [core]
 	excludesfile = ~/.gitignore_global
 	editor = vim
+[url "git@github.com:"]
+	insteadOf = https://github.com
+[pull]
+	rebase = true
+[init]
+	defaultBranch = main
