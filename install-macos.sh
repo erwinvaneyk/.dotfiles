@@ -33,14 +33,19 @@ brew install coreutils
 brew install htop
 brew install curl # overrides system-provided curl
 brew install wget 
-brew install cheat
 brew install fswatch
+brew install kubernetes-cli
 
 # Install (GUI) Applications
-brew cask install spotify
-brew cask install slack
-brew cask install goland
-
+brew install --cask spotify
+brew install --cask slack
+brew install --cask goland
+brew install --cask toggl-track
+brew install --cask iterm2
+brew install --cask nordvpn
+brew install --cask zoom
+brew install --cask docker
+brew install --cask notion
 
 # Configure terminal (zsh)
 

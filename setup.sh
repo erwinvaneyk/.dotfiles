@@ -2,7 +2,7 @@
 
 set -x
 
-src="$(dirname $0)"
+src="$(realpath $(dirname $0))"
 dst="${HOME}"
 
 
