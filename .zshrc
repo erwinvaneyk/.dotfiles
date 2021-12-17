@@ -112,10 +112,10 @@ alias less='less -FSRXc'                    # Preferred 'less' implementation
 cd() { builtin cd "$@"; ll; }               # Always list directory contents upon 'cd'
 alias vi="vim"
 alias cd~="cd ~"
-alias cd..="cd ../"
-alias .="cd .."
-alias ..="cd ../.."
-alias ...="cd ../../.."
+#alias cd..="cd ../"
+#alias .="cd .."
+#alias ..="cd ../.."
+#alias ...="cd ../../.."
 alias edit='vim'			    # Open in default editor (vim)
 alias f='open -a Finder ./'                 # f: Opens current directory in MacOS Finder
 alias projects="cd ~/projects"
@@ -149,7 +149,6 @@ extract () {
 }
 
 # Git
-alias git="hub"
 alias g="git"
 compdef g="git"
 
@@ -158,14 +157,19 @@ alias d="docker"
 docker-reset() { 
 	docker stop $(docker ps -a -q)
 	docker rm $(docker ps -a -q)
+	docker volume prune -f
+	docker images prune
+	docker network prune -f
 }
 
 # Kubernetes
 alias k="kubectl"
 source <(kubectl completion zsh | sed 's/kubectl/k/g') # Because compdef causes a segfault in zsh
-alias ksh="kubectl run ksh --generator=run-pod/v1 --rm -i --tty --image nicolaka/netshoot -- bash"
+# alias ksh="kubectl run ksh --rm -i --tty --image nicolaka/netshoot -- bash"
 alias dsh="docker run --network host --name dsh --rm -it nicolaka/netshoot /bin/bash"
 
+# Makefile
+alias m="make"
 
 # AWS
 AWS_REGION="us-west-2"
@@ -173,40 +177,26 @@ AWS_REGION="us-west-2"
 # X11
 export PATH="${PATH}:/opt/X11/bin/"
 
-# Fast switching between kubeconfig files
-kc() {
-  candidate="$(kind get kubeconfig-path --name="$1")"
-  if ! stat "$candidate" > /dev/null ; then
-    candidate="${HOME}/.kube/$1"
-    if ! stat "$candidate" > /dev/null ; then
-      return
-    fi
-  fi
-  export KUBECONFIG="$candidate"
-  echo "$KUBECONFIG"
-}
-
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-
-# CAPI-MVP
-project() {
-  project=$1
-  project_path=$HOME/projects/$project
-  if ! "$project_path" ; then
-    echo "unknown project '$project'"
-    exit 1
-  fi
-  PATH="$project_path/bin:$PATH"
-  source "$project_path/project.env" || true
-  export PROJECT_ROOT=${project_path}
-}
-
-docker-proxy() {
-  HOST_PORT=$1
-  CONTAINER_IPPORT=$2
-  docker run --rm -p ${HOST_PORT}:1234 verb/socat TCP-LISTEN:1234,fork TCP-CONNECT:${CONTAINER_IPPORT}
-}
-
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+export KUBECONFIG=${HOME}/.kube/config
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+autoload -U compinit; compinit
+
+export KUBECONFIG="${HOME}/.kube/ddu-cluster"
+export ARGUS_KUBECONFIG="${HOME}/.kube/ddu-cluster"
+
+
+#source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
+#PROMPT='$(kube_ps1)'$PROMPT
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PATH="$HOME/bin:${PATH}"
+
+export DOCKER_USER=erwinvaneyk
